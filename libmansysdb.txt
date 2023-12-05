@@ -1,0 +1,61 @@
+CREATE TABLE patron_details(
+    patron_no int(4) primary key auto_increment,
+    patron_name VARCHAR(25),
+    user_type VARCHAR(25)
+);
+
+CREATE TABLE your_table_name (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    -- Other columns...
+    patron_id AS CONCAT('p', LPAD(id + 999, 4, '0')) STORED
+);
+INSERT INTO patron_details(patron_no, user_type, patron_name)
+VALUES
+    ('pt0001', 'student', 'steve'),
+    ('pt0002', 'faculty', 'teresa'),
+    ('pt0003', 'student', 'kang'),
+    ('pt0004', 'student', 'kim'),
+    ('pt0005', 'faculty', 'kai'),
+    ('pt0006', 'faculty', 'park');
+
+
+
+CREATE TABLE LibraryBooks (
+    ISBN CHAR(8) PRIMARY KEY,
+    book_code VARCHAR(20),
+    category ENUM('in library use', 'for instructors', 'to lend'),
+    title VARCHAR(100),
+    author VARCHAR(50),
+    availability ENUM('avl', 'lent'),
+    shelf_no VARCHAR(10)
+);
+
+INSERT INTO LibraryBooks (ISBN, book_code, category, title, author, availability, shelf_no) VALUES
+('19385756', 'cs2003', 'in library use', 'computers', 'ram singh', 'avl', 'a5-123'),
+('19473528', 'en1846', 'for instructors', 'the journal', 'preety rao', 'lent', 'b6-452'),
+('29472648', 'mc2849', 'to lend', 'machines', 'pankaj pande', 'lent', 's2-122');
+
+
+
+CREATE TABLE issue_relation (
+    patron_no int,
+    ISBN VARCHAR(8),
+    date_of_issue DATE,
+    return_date DATE,
+    fine_incurred DECIMAL(10, 2),
+    PRIMARY KEY (patron_no, ISBN),
+    FOREIGN KEY (patron_no) REFERENCES patron_details(patron_no)
+);
+
+
+
+
+
+INSERT INTO LibraryBooks (ISBN, book_code, category, title, author, availability, shelf_no)
+VALUES
+    (12345678, 'cs1001', 'to lend', 'Introduction to Algorithms', 'Thomas H. Cormen', 'avl', 'cs-a1');
+
+
+
+
